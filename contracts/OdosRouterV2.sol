@@ -248,7 +248,7 @@ contract OdosRouterV2 is Ownable {
       }
       IERC20(tokenInfo.inputToken).safeTransferFrom(
         msg.sender,
-        executor,
+        tokenInfo.inputReceiver,
         tokenInfo.inputAmount
       );
     }
