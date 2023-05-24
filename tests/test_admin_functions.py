@@ -7,7 +7,6 @@ from brownie import accounts
 @pytest.fixture
 def router():
     return brownie.OdosRouterV2.deploy(
-        "0x0000000000000000000000000000000000000000",
         {
             "from": accounts[0],
         },

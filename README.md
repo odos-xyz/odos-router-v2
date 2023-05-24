@@ -46,9 +46,9 @@ Some tests utilize the Web3.py framework for additional functionality. This and 
 pip install -r requirements.txt
 ```
 
-## Usage
+## Running Tests
 
-Once the dependencies are installed, the full suite of tests can be run with
+To test the Router's functionality, OdosWethExecutor.sol is provided as an example Odos Executor (Production Executors will be much more complex but will interact with the router in the same way). The WETH and Permit2 contract directories are also provided as examples of what contracts the router may be interacting with. With the above dependencies installed, the full suite of tests can be run with
 
 ```bash
 brownie test

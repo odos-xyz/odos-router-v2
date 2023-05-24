@@ -12,13 +12,7 @@ from web3 import Web3
 
 @pytest.fixture
 def router():
-    PERMIT2 = brownie.Permit2.deploy(
-        {
-            "from": accounts[0],
-        }
-    )
     return brownie.OdosRouterV2.deploy(
-        PERMIT2.address,
         {
             "from": accounts[0],
         },
@@ -369,11 +363,14 @@ def test_swap_referral_fee(router, weth_executor):
 
 
 def test_swap_permit2(router, weth_executor):
-    permit2_address = router.permit2()
     weth_address = weth_executor.WETH()
     input_amount = int(1e18)
 
-    PERMIT2 = brownie.interface.IPermit2(permit2_address)
+    PERMIT2 = brownie.Permit2.deploy(
+        {
+            "from": accounts[0],
+        }
+    )
     WETH = brownie.interface.IWETH(weth_address)
 
     # Use accounts to sign and send EIP712 signature for Permit2
@@ -406,7 +403,7 @@ def test_swap_permit2(router, weth_executor):
     )
     # Approve WETH for use by Permit2
     WETH.approve(
-        router.permit2(),
+        PERMIT2.address,
         input_amount,
         {
             "from": this_account,
@@ -429,6 +426,7 @@ def test_swap_permit2(router, weth_executor):
     balance_before = accounts[0].balance()
 
     router.swapPermit2(
+        [PERMIT2.address, permit2_nonce, permit2_deadline, signature],
         [
             weth_address,
             input_amount,
@@ -441,9 +439,6 @@ def test_swap_permit2(router, weth_executor):
         "0x0000000000000000000000000000000000000000000000000000000000000000",
         weth_executor.address,
         0,
-        signature,
-        permit2_nonce,
-        permit2_deadline,
         {
             "value": 0,
             "from": this_account,
