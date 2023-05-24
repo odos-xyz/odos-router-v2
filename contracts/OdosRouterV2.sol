@@ -22,15 +22,22 @@ contract OdosRouterV2 is Ownable {
   // than reading from calldata. addressListStart is the storage slot of the first dynamic array element
   uint256 private constant addressListStart = 
     80084422859880547211683076133703299733277748156566366325829078699459944778998;
-
   address[] public addressList;
 
+  // @dev constants for managing referrals and fees
   uint256 public constant REFERRAL_WITH_FEE_THRESHOLD = 1 << 31;
   uint256 public constant FEE_DENOM = 1e18;
-  ISignatureTransfer public immutable permit2;
 
+  // @dev fee taken on multi-input and multi-output swaps instead of positive slippage
   uint256 public swapMultiFee;
 
+  /// @dev Contains all information needed to describe the input and output for a swap
+  struct permit2Info {
+    address contractAddress;
+    uint256 nonce;
+    uint256 deadline;
+    bytes signature;
+  }
   /// @dev Contains all information needed to describe the input and output for a swap
   struct swapTokenInfo {
     address inputToken;
@@ -81,9 +88,7 @@ contract OdosRouterV2 is Ownable {
   mapping(uint32 => referralInfo) public referralLookup;
 
   /// @dev Set the null referralCode as "Unregistered" with no additional fee
-  constructor(address _permit2) {
-    permit2 = ISignatureTransfer(_permit2);
-
+  constructor() {
     referralLookup[0].referralFee = 0;
     referralLookup[0].beneficiary = address(0);
     referralLookup[0].registered = true;
@@ -256,71 +261,36 @@ contract OdosRouterV2 is Ownable {
   }
 
   /// @notice Externally facing interface for swapping two tokens
+  /// @param permit2 All additional info for Permit2 transfers
   /// @param tokenInfo All information about the tokens being swapped
   /// @param pathDefinition Encoded path definition for executor
   /// @param executor Address of contract that will execute the path
   /// @param referralCode referral code to specify the source of the swap
-  /// @param signature used for Permit2
-  /// @param nonce the nonce used in Permit2
-  /// @param deadline the deadline used in Permit2
   function swapPermit2(
+    permit2Info memory permit2,
     swapTokenInfo memory tokenInfo,
     bytes calldata pathDefinition,
     address executor,
-    uint32 referralCode,
-    bytes memory signature,
-    uint256 nonce,
-    uint256 deadline
+    uint32 referralCode
   )
     external
     returns (uint256 amountOut)
   {
-    return _swapPermit2(
-      tokenInfo,
-      pathDefinition,
-      executor,
-      referralCode,
-      signature,
-      nonce,
-      deadline
-    );
-  }
-
-  /// @notice Externally facing interface for swapping two tokens
-  /// @param tokenInfo All information about the tokens being swapped
-  /// @param pathDefinition Encoded path definition for executor
-  /// @param executor Address of contract that will execute the path
-  /// @param referralCode referral code to specify the source of the swap
-  /// @param signature used for Permit2
-  /// @param nonce the nonce used in Permit2
-  /// @param deadline the deadline used in Permit2
-  function _swapPermit2(
-    swapTokenInfo memory tokenInfo,
-    bytes calldata pathDefinition,
-    address executor,
-    uint32 referralCode,
-    bytes memory signature,
-    uint256 nonce,
-    uint256 deadline
-  )
-    internal
-    returns (uint256 amountOut)
-  {
-    permit2.permitTransferFrom(
+    ISignatureTransfer(permit2.contractAddress).permitTransferFrom(
       ISignatureTransfer.PermitTransferFrom(
         ISignatureTransfer.TokenPermissions(
           tokenInfo.inputToken,
           tokenInfo.inputAmount
         ),
-        nonce,
-        deadline
+        permit2.nonce,
+        permit2.deadline
       ),
       ISignatureTransfer.SignatureTransferDetails(
         tokenInfo.inputReceiver,
         tokenInfo.inputAmount
       ),
       msg.sender,
-      signature
+      permit2.signature
     );
     return _swap(
       tokenInfo,
@@ -593,25 +563,21 @@ contract OdosRouterV2 is Ownable {
   }
 
   /// @notice Externally facing interface for swapping between two sets of tokens with Permit2
+  /// @param permit2 All additional info for Permit2 transfers
   /// @param inputs list of input token structs for the path being executed
   /// @param outputs list of output token structs for the path being executed
   /// @param valueOutMin minimum amount of value out the user will accept
   /// @param pathDefinition Encoded path definition for executor
   /// @param executor Address of contract that will execute the path
   /// @param referralCode referral code to specify the source of the swap
-  /// @param signature used for the Permit2 batch transfer
-  /// @param nonce the nonce used in Permit2
-  /// @param deadline the deadline used in Permit2
   function swapMultiPermit2(
+    permit2Info memory permit2,
     inputTokenInfo[] memory inputs,
     outputTokenInfo[] memory outputs,
     uint256 valueOutMin,
     bytes calldata pathDefinition,
     address executor,
-    uint32 referralCode,
-    bytes memory signature,
-    uint256 nonce,
-    uint256 deadline
+    uint32 referralCode
   )
     external
     payable
@@ -624,40 +590,41 @@ contract OdosRouterV2 is Ownable {
 
       permit = ISignatureTransfer.PermitBatchTransferFrom(
         new ISignatureTransfer.TokenPermissions[](permit_length),
-        nonce,
-        deadline
+        permit2.nonce,
+        permit2.deadline
       );
       transferDetails = 
         new ISignatureTransfer.SignatureTransferDetails[](permit_length);
     }
-    uint256 expected_msg_value = 0;
-    for (uint256 i = 0; i < inputs.length; i++) {
+    {
+      uint256 expected_msg_value = 0;
+      for (uint256 i = 0; i < inputs.length; i++) {
 
-      if (inputs[i].tokenAddress == _ETH) {
-        if (inputs[i].amountIn == 0) inputs[i].amountIn = msg.value;
+        if (inputs[i].tokenAddress == _ETH) {
+          if (inputs[i].amountIn == 0) inputs[i].amountIn = msg.value;
 
-        expected_msg_value = inputs[i].amountIn;
-      }
-      else {
-        if (inputs[i].amountIn == 0) {
-          inputs[i].amountIn = IERC20(inputs[i].tokenAddress).balanceOf(msg.sender);
+          expected_msg_value = inputs[i].amountIn;
         }
-        uint256 permit_index = expected_msg_value == 0 ? i : i - 1;
+        else {
+          if (inputs[i].amountIn == 0) {
+            inputs[i].amountIn = IERC20(inputs[i].tokenAddress).balanceOf(msg.sender);
+          }
+          uint256 permit_index = expected_msg_value == 0 ? i : i - 1;
 
-        permit.permitted[permit_index].token = inputs[i].tokenAddress;
-        permit.permitted[permit_index].amount = inputs[i].amountIn;
+          permit.permitted[permit_index].token = inputs[i].tokenAddress;
+          permit.permitted[permit_index].amount = inputs[i].amountIn;
 
-        transferDetails[permit_index].to = inputs[i].receiver;
-        transferDetails[permit_index].requestedAmount = inputs[i].amountIn;
+          transferDetails[permit_index].to = inputs[i].receiver;
+          transferDetails[permit_index].requestedAmount = inputs[i].amountIn;
+        }
       }
+      require(msg.value == expected_msg_value, "Wrong msg.value");
     }
-    require(msg.value == expected_msg_value, "Wrong msg.value");
-
-    permit2.permitTransferFrom(
+    ISignatureTransfer(permit2.contractAddress).permitTransferFrom(
       permit,
       transferDetails,
       msg.sender,
-      signature
+      permit2.signature
     );
     return _swapMulti(
       inputs,
@@ -799,9 +766,8 @@ contract OdosRouterV2 is Ownable {
       require(_referralFee == 0, "Invalid fee for code");
     } else {
       require(_referralFee > 0, "Invalid fee for code");
-    }
-    // Make sure the beneficiary is not the null address if there is a fee
-    if (_referralFee != 0) {
+
+      // Make sure the beneficiary is not the null address if there is a fee
       require(_beneficiary != address(0), "Null beneficiary");
     }
     referralLookup[_referralCode].referralFee = _referralFee;
