@@ -67,7 +67,8 @@ contract OdosRouterV2 is Ownable {
     address inputToken,
     uint256 amountOut,
     address outputToken,
-    int256 slippage
+    int256 slippage,
+    uint32 referralCode
   );
   /// @dev event for swapping multiple input and/or output tokens
   event SwapMulti(
@@ -356,7 +357,8 @@ contract OdosRouterV2 is Ownable {
       tokenInfo.inputToken,
       amountOut,
       tokenInfo.outputToken,
-      slippage
+      slippage,
+      referralCode
     );
   }
 
