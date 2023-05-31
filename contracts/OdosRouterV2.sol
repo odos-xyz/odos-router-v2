@@ -342,8 +342,9 @@ contract OdosRouterV2 is Ownable {
       amountOut = amountOut * (FEE_DENOM - thisReferralInfo.referralFee) / FEE_DENOM;
     }
     int256 slippage = int256(amountOut) - int256(tokenInfo.outputQuote);
-    if (amountOut > tokenInfo.outputQuote) amountOut = tokenInfo.outputQuote;
-
+    if (slippage > 0) {
+      amountOut = tokenInfo.outputQuote;
+    }
     require(amountOut >= tokenInfo.outputMin, "Slippage Limit Exceeded");
 
     // Transfer out the final output to the end user
@@ -535,8 +536,9 @@ contract OdosRouterV2 is Ownable {
 
     for (uint256 i = 0; i < inputs.length; i++) {
       if (inputs[i].tokenAddress == _ETH) {
-        if (inputs[i].amountIn == 0) inputs[i].amountIn = msg.value;
-
+        if (inputs[i].amountIn == 0) {
+          inputs[i].amountIn = msg.value;
+        }
         expected_msg_value = inputs[i].amountIn;
       } 
       else {
@@ -601,8 +603,9 @@ contract OdosRouterV2 is Ownable {
       for (uint256 i = 0; i < inputs.length; i++) {
 
         if (inputs[i].tokenAddress == _ETH) {
-          if (inputs[i].amountIn == 0) inputs[i].amountIn = msg.value;
-
+          if (inputs[i].amountIn == 0) {
+            inputs[i].amountIn = msg.value;
+          }
           expected_msg_value = inputs[i].amountIn;
         }
         else {
@@ -699,7 +702,10 @@ contract OdosRouterV2 is Ownable {
     IOdosExecutor(executor).executePath{value: msg.value}(pathDefinition, amountsIn, msg.sender);
 
     referralInfo memory thisReferralInfo;
-    if (referralCode > REFERRAL_WITH_FEE_THRESHOLD) thisReferralInfo = referralLookup[referralCode];
+    if (referralCode > REFERRAL_WITH_FEE_THRESHOLD) {
+      thisReferralInfo = referralLookup[referralCode];
+    }
+
     {
       uint256 valueOut;
       uint256 _swapMultiFee = swapMultiFee;
@@ -796,7 +802,9 @@ contract OdosRouterV2 is Ownable {
     external
     onlyOwner
   {
-    for (uint256 i = 0; i < addresses.length; i++) addressList.push(addresses[i]);
+    for (uint256 i = 0; i < addresses.length; i++) {
+      addressList.push(addresses[i]);
+    }
   }
 
   /// @notice Allows the owner to transfer funds held by the router contract
