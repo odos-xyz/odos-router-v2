@@ -53,3 +53,30 @@ To test the Router's functionality, OdosWethExecutor.sol is provided as an examp
 ```bash
 brownie test
 ```
+
+## Chain Deployments
+
+### Mainnets
+
+| Chain | Router Address |
+| :-: | :-: |
+| <img src="https://assets.odos.xyz/chains/ethereum.png" width="50" height="50"><br>Ethereum | [`0xCf5540fFFCdC3d510B18bFcA6d2b9987b0772559`](https://etherscan.io/address/0xcf5540fffcdc3d510b18bfca6d2b9987b0772559) |
+| <img src="https://assets.odos.xyz/chains/arbitrum.png" width="50" height="50"><br>Arbitrum | [`0xa669e7A0d4b3e4Fa48af2dE86BD4CD7126Be4e13`](https://arbiscan.io/address/0xa669e7a0d4b3e4fa48af2de86bd4cd7126be4e13) |
+| <img src="https://assets.odos.xyz/chains/optimism.png" width="50" height="50"><br>Optimism | [`0xCa423977156BB05b13A2BA3b76Bc5419E2fE9680`](https://optimistic.etherscan.io/address/0xca423977156bb05b13a2ba3b76bc5419e2fe9680) |
+| <img src="https://assets.odos.xyz/chains/base.png" width="50" height="50"><br>Base | [`0x19cEeAd7105607Cd444F5ad10dd51356436095a1`](https://basescan.org/address/0x19ceead7105607cd444f5ad10dd51356436095a1) |
+| <img src="https://assets.odos.xyz/chains/polygon.png" width="50" height="50"><br>Polygon PoS | [`0x4E3288c9ca110bCC82bf38F09A7b425c095d92Bf`](https://polygonscan.com/address/0x4e3288c9ca110bcc82bf38f09a7b425c095d92bf) |
+| <img src="https://assets.odos.xyz/chains/avalanche.png" width="50" height="50"><br>Avalanche | [`0x88de50B233052e4Fb783d4F6db78Cc34fEa3e9FC`](https://snowtrace.io/address/0x88de50b233052e4fb783d4f6db78cc34fea3e9fc) |
+| <img src="https://assets.odos.xyz/chains/bnb.png" width="50" height="50"><br>BNB | [`0x89b8AA89FDd0507a99d334CBe3C808fAFC7d850E`](https://bscscan.com/address/0x89b8aa89fdd0507a99d334cbe3c808fafc7d850e) |
+| <img src="https://assets.odos.xyz/chains/fantom.png" width="50" height="50"><br>Fantom | [`0xD0c22A5435F4E8E5770C1fAFb5374015FC12F7cD`](https://ftmscan.com/address/0xd0c22a5435f4e8e5770c1fafb5374015fc12f7cd) |
+| <img src="https://assets.odos.xyz/chains/zksync.png" width="50" height="50"><br>ZKSync Era | [`0x4bBa932E9792A2b917D47830C93a9BC79320E4f7`](https://explorer.zksync.io/address/0x4bBa932E9792A2b917D47830C93a9BC79320E4f7) |
+| <img src="https://assets.odos.xyz/chains/polygon.png" width="50" height="50"><br>Polygon zkEVM | [`0x2b8B3f0949dfB616602109D2AAbBA11311ec7aEC`](https://zkevm.polygonscan.com/address/0x2b8B3f0949dfB616602109D2AAbBA11311ec7aEC) |
+
+### Testnets
+
+| Chain | Router Address |
+| :-: | :-: |
+| <img src="https://assets.odos.xyz/chains/base.png" width="50" height="50"><br>Base Goerli | [`0x8682F37f8914c26dabBf2c5c6EbF332C166b4792`](https://goerli.basescan.org/address/0x8682F37f8914c26dabBf2c5c6EbF332C166b4792) |
+
+## Audit
+
+This contract was audited by [Zellic](https://zellic.io) in June 2023. A link to the report can be found in the [Zellic Publications GitHub Repository](https://github.com/Zellic/publications/blob/master/Odos%20-%20Zellic%20Audit%20Report.pdf). A copy of the report is included in this repository.
