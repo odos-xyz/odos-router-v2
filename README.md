@@ -70,4 +70,4 @@ brownie test
 
 ## Audit
 
-This contract was audited by [Zellic](https://zellic.io) in June 2023. A link to the report can be found in the [Zellic Publications GitHub Repository](https://github.com/Zellic/publications/blob/master/Odos%20-%20Zellic%20Audit%20Report.pdf).
+This contract was audited by [Zellic](https://zellic.io) in June 2023. A link to the report can be found in the [Zellic Publications GitHub Repository](https://github.com/Zellic/publications/blob/master/Odos%20-%20Zellic%20Audit%20Report.pdf). A copy of the report is included in this repository.
