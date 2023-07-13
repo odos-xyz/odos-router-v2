@@ -67,3 +67,7 @@ brownie test
 | <img src="https://assets.odos.xyz/chains/bnb.png" width="50" height="50"><br>BNB | [`0x89b8AA89FDd0507a99d334CBe3C808fAFC7d850E`](https://bscscan.com/address/0x89b8aa89fdd0507a99d334cbe3c808fafc7d850e) |
 | <img src="https://assets.odos.xyz/chains/fantom.png" width="50" height="50"><br>Fantom | [`0xD0c22A5435F4E8E5770C1fAFb5374015FC12F7cD`](https://ftmscan.com/address/0xd0c22a5435f4e8e5770c1fafb5374015fc12f7cd) |
 | <img src="https://assets.odos.xyz/chains/zksync.png" width="50" height="50"><br>ZKSync Era | [`0x4bBa932E9792A2b917D47830C93a9BC79320E4f7`](https://explorer.zksync.io/address/0x4bBa932E9792A2b917D47830C93a9BC79320E4f7) |
+
+## Audit
+
+This contract was audited by [Zellic](https://zellic.io) in June 2023. A link to the report can be found in the [Zellic Publications GitHub Repository](https://github.com/Zellic/publications/blob/master/Odos%20-%20Zellic%20Audit%20Report.pdf).
