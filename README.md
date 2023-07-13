@@ -56,6 +56,8 @@ brownie test
 
 ## Chain Deployments
 
+### Mainnets
+
 | Chain | Router Address |
 | :-: | :-: |
 | <img src="https://assets.odos.xyz/chains/ethereum.png" width="50" height="50"><br>Ethereum | [`0xCf5540fFFCdC3d510B18bFcA6d2b9987b0772559`](https://etherscan.io/address/0xcf5540fffcdc3d510b18bfca6d2b9987b0772559) |
@@ -69,6 +71,11 @@ brownie test
 | <img src="https://assets.odos.xyz/chains/zksync.png" width="50" height="50"><br>ZKSync Era | [`0x4bBa932E9792A2b917D47830C93a9BC79320E4f7`](https://explorer.zksync.io/address/0x4bBa932E9792A2b917D47830C93a9BC79320E4f7) |
 | <img src="https://assets.odos.xyz/chains/polygon.png" width="50" height="50"><br>Polygon zkEVM | [`0x2b8B3f0949dfB616602109D2AAbBA11311ec7aEC`](https://zkevm.polygonscan.com/address/0x2b8B3f0949dfB616602109D2AAbBA11311ec7aEC) |
 
+### Testnets
+
+| Chain | Router Address |
+| :-: | :-: |
+| <img src="https://assets.odos.xyz/chains/base.png" width="50" height="50"><br>Base Goerli | [`0x8682F37f8914c26dabBf2c5c6EbF332C166b4792`](https://goerli.basescan.org/address/0x8682F37f8914c26dabBf2c5c6EbF332C166b4792) |
 
 ## Audit
 
