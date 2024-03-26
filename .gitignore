@@ -415,4 +415,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# spellcheck
+.dictionary.txt
+dictionary.dic
+.pyspelling.yaml
+
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,windows,git,python,solidity,visualstudiocode
