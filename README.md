@@ -70,6 +70,7 @@ brownie test
 | <img src="https://assets.odos.xyz/chains/fantom.png" width="50" height="50"><br>Fantom | [`0xD0c22A5435F4E8E5770C1fAFb5374015FC12F7cD`](https://ftmscan.com/address/0xd0c22a5435f4e8e5770c1fafb5374015fc12f7cd) |
 | <img src="https://assets.odos.xyz/chains/zksync.png" width="50" height="50"><br>ZKSync Era | [`0x4bBa932E9792A2b917D47830C93a9BC79320E4f7`](https://explorer.zksync.io/address/0x4bBa932E9792A2b917D47830C93a9BC79320E4f7) |
 | <img src="https://assets.odos.xyz/chains/mode.png" width="50" height="50"><br>Mode | [`0x7E15EB462cdc67Cf92Af1f7102465a8F8c784874`](https://explorer.mode.network/address/0x7E15EB462cdc67Cf92Af1f7102465a8F8c784874) |
+| <img src="https://assets.odos.xyz/chains/linea.png" width="50" height="50"><br>Linea | [`0x2d8879046f1559E53eb052E949e9544bCB72f414`](https://lineascan.build/address/0x2d8879046f1559E53eb052E949e9544bCB72f414) |
 
 ## Audit
 
