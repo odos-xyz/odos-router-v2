@@ -60,6 +60,18 @@ def encode_address(address, address_list):
     else:
         return "0001" + address[2:]
 
+def decode_address(start_index, byte_string, address_list):
+
+    token_id = byte_string[start_index:start_index+4]
+
+    if token_id == "0000":
+        return "0x0000000000000000000000000000000000000000", start_index + 4
+    elif token_id == "0001":
+        end_index = start_index + 44
+        return "0x" + byte_string[start_index+4:end_index], end_index
+    else:
+        address_list_index = int(token_id, 16) - 2
+        return address_list[address_list_index], start_index + 4
 
 def encode_amount(amount):
     if amount == 0:
@@ -71,6 +83,26 @@ def encode_amount(amount):
             amount, byte_length
         )
 
+def decode_amount(start_index, byte_string):
+
+    length = int(byte_string[start_index:start_index+2], 16)
+
+    if length == 0:
+        return 0, start_index + 2
+
+    end_index = start_index + 2 + length * 2
+
+    amount = int(byte_string[start_index + 2: end_index], 16)
+
+    return amount, end_index
+
+def decode_amount_with_length(start_index, byte_string, length):
+
+    end_index = start_index + length * 2
+
+    amount = int(byte_string[start_index:end_index], 16)
+
+    return amount, end_index
 
 def encode_bytes(byte_string):
     string_length = len(byte_string[2:])
@@ -83,3 +115,12 @@ def encode_bytes(byte_string):
     num_words = len(padded_byte_string) // 64
 
     return encode_bytes_string(num_words, 1) + padded_byte_string
+
+def decode_bytes(start_index, byte_string):
+    num_words = int(byte_string[start_index:start_index + 2], 16)
+
+    end_index = start_index + 2 + 64 * num_words
+
+    ret_byte_string = byte_string[start_index + 2: end_index]
+
+    return ret_byte_string, end_index
