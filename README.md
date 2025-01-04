@@ -64,6 +64,7 @@ brownie test
 | <img src="https://assets.odos.xyz/chains/optimism.png" width="50" height="50"><br>Optimism | [`0xCa423977156BB05b13A2BA3b76Bc5419E2fE9680`](https://optimistic.etherscan.io/address/0xca423977156bb05b13a2ba3b76bc5419e2fe9680) |
 | <img src="https://assets.odos.xyz/chains/bnb.png" width="50" height="50"><br>BNB | [`0x89b8AA89FDd0507a99d334CBe3C808fAFC7d850E`](https://bscscan.com/address/0x89b8aa89fdd0507a99d334cbe3c808fafc7d850e) |
 | <img src="https://assets.odos.xyz/chains/polygon.png" width="50" height="50"><br>Polygon PoS | [`0x4E3288c9ca110bCC82bf38F09A7b425c095d92Bf`](https://polygonscan.com/address/0x4e3288c9ca110bcc82bf38f09a7b425c095d92bf) |
+| <img src="https://assets.odos.xyz/chains/sonic.png" width="50" height="50"><br>Sonic | [`0xaC041Df48dF9791B0654f1Dbbf2CC8450C5f2e9D`](https://sonicscan.org/address/0xaC041Df48dF9791B0654f1Dbbf2CC8450C5f2e9D) |
 | <img src="https://assets.odos.xyz/chains/fantom.png" width="50" height="50"><br>Fantom | [`0xD0c22A5435F4E8E5770C1fAFb5374015FC12F7cD`](https://ftmscan.com/address/0xd0c22a5435f4e8e5770c1fafb5374015fc12f7cd) |
 | <img src="https://assets.odos.xyz/chains/fraxtal.png" width="50" height="50"><br>Fraxtal | [`0x56c85a254DD12eE8D9C04049a4ab62769Ce98210`](https://fraxscan.com/address/0x56c85a254DD12eE8D9C04049a4ab62769Ce98210) |
 | <img src="https://assets.odos.xyz/chains/zksync.png" width="50" height="50"><br>ZKSync Era | [`0x4bBa932E9792A2b917D47830C93a9BC79320E4f7`](https://era.zksync.network/address/0x4bBa932E9792A2b917D47830C93a9BC79320E4f7) |
